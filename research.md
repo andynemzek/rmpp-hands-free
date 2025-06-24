@@ -1,29 +1,5 @@
-
-/sys/bus/platform/drivers/ci_hdrc
-/sys/module/ulpi/holders/ci_hdrc
-/sys/module/usbcore/holders/ci_hdrc
-/sys/module/ehci_hcd/holders/ci_hdrc
-/sys/module/ci_hdrc
-
-/sys/bus/platform/drivers/ci_hdrc/ci_hdrc.0/role
-/sys/class/usb_role/ci_hdrc.0-role-switch/role
-
 ===========
-To use keyboard:
-
-Set the following in /etc/modprobe.d/options:
-options usbcore use_both_schemes=y
-
-Plug in device
-
-Perform this command:
-echo "host" > /sys/bus/platform/drivers/ci_hdrc/ci_hdrc.0/role
-
-===========
-
-cat /sys/kernel/config/usb_gadget/g_ether/UDC 
-ci_hdrc.0
-
+Event system research:
 
 # Replay:
 xxd -r power-off.hex > /dev/input/event0
@@ -36,7 +12,6 @@ cat /dev/input/event3 | xxd
 evtest
 input-events
 evemu-record / evemu-play
-
 
 
 # blog:
@@ -90,6 +65,28 @@ https://github.com/torvalds/linux/blob/master/include/uapi/linux/input-event-cod
 # BTN_TOUCH             0x14a
 
 
+===========
+Interesting system paths related to USB:
 
+/sys/bus/platform/drivers/ci_hdrc
+/sys/module/ulpi/holders/ci_hdrc
+/sys/module/usbcore/holders/ci_hdrc
+/sys/module/ehci_hcd/holders/ci_hdrc
+/sys/module/ci_hdrc
 
+/sys/bus/platform/drivers/ci_hdrc/ci_hdrc.0/role
+/sys/class/usb_role/ci_hdrc.0-role-switch/role
 
+cat /sys/kernel/config/usb_gadget/g_ether/UDC 
+ci_hdrc.0
+
+===========
+To use keyboard:
+
+Set the following in /etc/modprobe.d/options:
+options usbcore use_both_schemes=y
+
+Plug in device
+
+Perform this command:
+echo "host" > /sys/bus/platform/drivers/ci_hdrc/ci_hdrc.0/role
